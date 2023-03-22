@@ -1,7 +1,6 @@
 ## Final Project
 ## Option 4: Stent data
-## Amber Vasquez kav835
-
+## Amber 
 ## Give context 
 # implications 
 # this data 

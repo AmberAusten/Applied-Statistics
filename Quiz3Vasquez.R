@@ -1,5 +1,5 @@
 # title: Quiz 3
-# author: Amber Vasquez
+# author: Amber 
 # date: Sep 10, 2021
 
 

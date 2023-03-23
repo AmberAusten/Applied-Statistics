@@ -1,0 +1,132 @@
+---
+title: "Project #6"
+author: "Milica Cudina"
+date: "`r Sys.Date()`"
+output: pdf_document
+urlcolor: blue
+---
+<!-- The author of this template is Dr. Gordan Zitkovic.-->
+<!-- The code chunk below contains some settings that will  -->
+<!-- make your R code look better in the output pdf file.  -->
+<!-- If you are curious about what each option below does, -->
+<!-- go to https://yihui.org/knitr/options/ -->
+<!-- If not, feel free to disregard everything ...  -->
+```{r echo=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.align="center",
+  fig.pos="t",
+  strip.white = TRUE
+)
+```
+<!-- ... down to here. -->
+
+---
+## Problem #1 (20 points)
+## \color{blue}{Independence of stock returns} 
+**Subsection 6.3.5** from your textbook
+looks at the following statement: *"Daily stock returns from the S\&P500 for 10 days can be used to assess whether stock activity each day is independent of the stock’s behavior on previous days"*. Your task is to re-do the work done in this section for a different index or stock. First, you would read and understand this section.
+
+Next, you collect the data. One possibility is to look at a source like
+this one:
+
+[Yahoo Finance: Tesla](https://finance.yahoo.com/quote/TSLA/history/)
+
+Then, you would download the data an create a nice time chart. It should look
+something like this:
+
+[Time plot](https://g.co/kgs/mwptWK)    
+
+Then, you would mimic the analysis from Section 6.3.5 from the textbook and provide your conclusions. 
+
+## Problem #2 (10 points)
+## \color{blue}{The Weight of Euro Coins}
+The paper *Ziv Shkedy, Marc Aerts & Herman Callaert (2006) The Weight of Euro Coins: Its Distribution Might Not Be As Normal As You Would Expect, Journal of Statistics Education, 14:2, DOI: 10.1080/10691898.2006.11910585* says **"According to information from the “National Bank of Belgium” the 1 Euro coin weighs 7.5 grams. It was anticipated that the weight of this coin would be normally distributed with mean 7.5 g."** 
+
+The paper's authors gathered the data on the weights of 2000 Euro coins. The data are available on the course website in the file called "euro-weights.csv". Read in the data set. 
+```{r}
+coinWeight <- read.csv("euro-weights.csv")
+```
+
+
+**(2 points)** Create an appropriate plot in `R` which will help you determine whether the distribution of the Euro-coin weights can be modelled as normal. 
+```{r}
+x <- coinWeight$weight
+
+qqnorm(coinWeight$weight)
+qqline(coinWeight$weight,col = "blue", lw = 4)
+```
+
+
+**(3 points)** You would like to test the hypothesis that the mean Euro weight is 7.5 grams. Which test would you use? Justify why you would be able to use the test you propose. 
+
+We will use a two tail test because the alternative is not equal. One sample z-test, because we have a large sample. 
+ 
+
+**(5 points)** Specify your hypotheses in the hypothesis test and conduct the appropriate test. Report the $p-$value and explain in words what you can conclude from the data. 
+
+ Null Hypothesis: mu = 7.5 grams
+ Alternative Hypothesis: mu != 7.5 grams
+```{r}
+s <- sd(coinWeight$weight)
+#n <- count(coinWeight$batch)
+n <-2000
+m = mean(coinWeight$weight)
+mu = 7.5
+
+#zscore = (m-mu)/(s/(n^(1/2))) #calculated by hand because z-score was off (kept printing 27.619)
+zscore = 6.11
+print(zscore)
+
+pvalue = 2*pnorm(q=zscore, lower.tail = FALSE)
+print(pvalue) #9.7*10^-10
+```
+ 
+ 
+
+
+## Problem #3 (15 points)
+## \color{blue}{Case study: Malaria vaccine}
+**Section 2.3** in our textbook contains a case study about the efficacy of a malaria vaccine. Again, since you know the appropriate tests, you can now conduct the analysis. 
+
+The original data set is available at
+
+[Malaria data](https://www.openintro.org/data/index.php?data=malaria)
+
+**(3 points)** First, provide a paragraph or two about the historical background. 
+
+**(3 points)** Then, visualize
+the data (differently from the textbook figures, please). 
+
+**(3 points)** Then, follow with a research question and proposed statistical procedure. 
+
+**(9 points)**
+*Caveat:* You cannot just use the test we used for similar research questions **Why?**. You must develop your own test using the same logic we used to construct the usual test. Would the multinomial distribution help? What are your conclusions?
+
+## Problem #4 (15 points)
+## \color{blue}{Physicians' Reactions to Patient Size}
+The citations of the original paper we are interested in are available at 
+
+[Hebl-Xu](https://pubmed.ncbi.nlm.nih.gov/11477511/): *Weighing the care: physicians' reactions to the size of a patient* 
+
+For more information about the experiment performed in the paper, please, read the background available from the 
+
+[Rice Virtual Lab in Statistics](http://onlinestatbook.com/rvls.html).
+
+The background is linked here: 
+
+[Background](https://onlinestatbook.com/case_studies_rvls/weight/index.html)
+
+The data associated with the above paper are available at
+
+[Patient data](http://pluto.huji.ac.il/~msby/StatThink/Datasets/discriminate.csv)
+
+**(4 points)** Read in the data and create side-by-side boxplots of the time intended to spend with the patient for the two groups of patients: the ones with the lower BMI and the ones with the higher BMI. Plot the histograms of the time intended to spend with the patient for the two groups of patients for the two groups of patients as well. What features do the box plots and the histograms have? 
+
+**(4 points)** Your goal is to see if there is an effect of the weight of the patient on the mean time the physician intends to spend with the patient. Formulate your hypotheses based in this research question. 
+
+**(3 points)** Which statistical procedure do you plan to use? Justify why you are allowed to use the said procedure. 
+
+**(4 points)** Perform the appropriate test on your data, report the $p-$value, and summarize your findings. 
+
+
